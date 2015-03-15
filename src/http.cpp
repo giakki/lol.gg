@@ -4,7 +4,12 @@
 
 #include <stdexcept>
 
-HttpClient::HttpClient() : m_curl { nullptr, [](CURL* c) { if (c != nullptr) { curl_easy_cleanup(c); }} } {
+HttpClient::HttpClient()
+    : m_curl{ nullptr, [](CURL* c) {
+          if (c != nullptr) {
+              curl_easy_cleanup(c);
+          }
+      } } {
 }
 
 void HttpClient::init() {
