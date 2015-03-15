@@ -3,6 +3,7 @@
 #include <gumbo.h>
 
 #include <boost/format.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/range/algorithm/remove_if.hpp>
 /* It looks like regexes are still broken in the linux stdlib */
@@ -124,8 +125,10 @@ ChampionBuilds findBuilds(const std::string& html) {
     ChampionBuilds builds;
     size_t i = 0;
 
-    /* Map the wrappers to their wrapped builds */
-    for (const auto& wrapper : wrappers) {
+    /* Map the wrappers to their wrapped builds.
+     * We iterate backwards because we want starters first.
+     */
+    for (const auto& wrapper : wrappers | boost::adaptors::reversed) {
         builds.emplace_back(wrapper->prev->v.text.text, findItems(wrapper));
     }
     /* Some builds are not available on the website. Remove those with 0 items  */
