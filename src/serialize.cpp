@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, const ChampionBuilds& builds);
 
 /* { "id": "item.id"  "count": item.count } */
 std::ostream& operator<<(std::ostream& os, const Item& item) {
-    os << R"({ "id": ")" << item.first << R"(", "count": )" << item.second << "}";
+    os << R"({ "id": ")" << item.first << R"(", "count": )" << item.second << "}"; //-V128
     return os;
 }
 
@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, const Build& build) {
 
 /* "blocks": [ each build ], */
 std::ostream& operator<<(std::ostream& os, const ChampionBuilds& builds) {
-    os << R"(" blocks ": [)";
+    os << R"("blocks": [)";
     for (auto it = std::begin(builds); it != std::end(builds); ++it) {
         if (it != std::begin(builds)) {
             os << ",";
