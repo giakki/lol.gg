@@ -169,13 +169,16 @@ ChampionBuilds findBuilds(const std::string& html) {
     }
     /* champion.gg does not track trinkets */
     for (auto&& build : builds) {
-        /* If the build has machete, add a sweeper, otherwise add a totem */
-        auto match =
-            boost::find_if(build.second, [](const Item& item) { return item.first == "1039"; });
-        if (match != std::end(build.second) && build.second.size() < 5) {
-            build.second.emplace_back("3341", 1);
-        } else {
-            build.second.emplace_back("3340", 1);
+        /* Only add trinkets to starter builds */
+        if (build.second.size() < 6) {
+            auto match =
+                boost::find_if(build.second, [](const Item& item) { return item.first == "1039"; });
+            /* If the build has machete, add a sweeper, otherwise add a totem */
+            if (match != std::end(build.second)) {
+                build.second.emplace_back("3341", 1);
+            } else {
+                build.second.emplace_back("3340", 1);
+            }
         }
     }
 
