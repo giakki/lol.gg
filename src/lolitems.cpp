@@ -55,9 +55,7 @@ int runProgram(const boost::filesystem::path& root) {
             builds = findBuilds(
                 client.get(std::string("http://champion.gg") + std::get<2>(element.value())));
             /* Save the build to disk. */
-            writeBuild(
-                root,
-                buildToJSON(std::get<0>(element.value()), std::get<1>(element.value()), builds));
+            writeBuild(root, std::get<0>(element.value()), std::get<1>(element.value()), builds);
         } catch (const std::exception& e) {
             /* Simply skip over to next champion */
             std::cout << Color::Red << e.what() << std::endl;
